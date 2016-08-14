@@ -65,18 +65,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // Defined actions -------------------->>>>>>
     
     @IBAction func pickAnImageFromAlbum(sender: AnyObject) {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(pickerController, animated: true, completion: nil)
+        
+        pickAnImage(.PhotoLibrary)
+
         }
     
     
     @IBAction func pickAnImageWithCamera(sender: AnyObject) {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = UIImagePickerControllerSourceType.Camera
-        self.presentViewController(pickerController, animated: true, completion: nil)
+        
+        pickAnImage(.Camera)
+        
     }
 
     
@@ -97,9 +95,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // We define the completion handler
         activityController.completionWithItemsHandler = {(activityType, completed:Bool, returnedItems:[AnyObject]?, error: NSError?) in
             if completed{
-                let meme = MemeStruct(topText: self.textFieldTop.text!, bottomText: self.textFieldBottom.text!, image:self.imageView.image!, memedImage: memedImage)
+                let meme = Meme(topText: self.textFieldTop.text!, bottomText: self.textFieldBottom.text!, image:self.imageView.image!, memedImage: memedImage)
 
-                // we dismiss the activity Controller
+                /// we dismiss the activity Controller
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
@@ -139,7 +137,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // Additional methods ------------------------------->>>>>>
     
     
-    // Initialize the textfields
+    /// Initialize the textfields
     func initializeTextFields( textfield: UITextField, text:String ) -> UITextField{
         let memeTextAttributes = [
             NSStrokeColorAttributeName: UIColor.blackColor(),
@@ -160,19 +158,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    // Generation of a "Memed Image"
+    /// Generation of a "Memed Image"
     func generateMemeImage() -> UIImage{
         
-        // We hide first the toolbars
+        /// We hide first the toolbars
         toolBarTop.alpha = 0.0
         toolBarBottom.alpha = 0.0
         
+        /// Creating the MemedImage
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
         let imageMemed: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        // We show again the toolbars, now that the image is generated
+        /// We show again the toolbars, now that the image is generated
         toolBarTop.alpha = 1.0
         toolBarBottom.alpha = 1.0
         
@@ -180,34 +179,46 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
-    // Keyboard Notififcation Subscription
+    /// Keyboard Notififcation Subscription
     func subscribeToKeyboardNotification(){
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    //Keyboard Notification Unsubsciption
+    /// Keyboard Notification Unsubsciption
     func unsubscribeFromKeyboardNotification(){
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    //Function to move view when the keyboard shows up
+    /// Function to move view when the keyboard shows up
     func keyboardWillShow(notification: NSNotification){
-        view.frame.origin.y -= getKeyboardHeight(notification)
+        
+        // We will move the view only if the bottom text is edited
+        if self.textFieldBottom.editing{
+        view.frame.origin.y = -getKeyboardHeight(notification)
+        }
     }
     
-    // Function to move the view back when the keyboard hides 
+    /// Function to move the view back when the keyboard hides
     func keyboardWillHide(notification: NSNotification){
-        view.frame.origin.y += getKeyboardHeight(notification)
+        view.frame.origin.y = 0
     }
     
-    // function to get the keyboard height
+    /// function to get the keyboard height
     func getKeyboardHeight(notification: NSNotification) -> CGFloat{
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.CGRectValue().height
+    }
+    
+    /// Function for the pick code
+    func pickAnImage(sourceType:  UIImagePickerControllerSourceType){
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = sourceType
+        self.presentViewController(pickerController, animated: true, completion: nil)
     }
     
         //<<<<---------------------------------------------------
