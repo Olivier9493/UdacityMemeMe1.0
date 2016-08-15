@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
    
     
-    // All the needed outlets----------------->>>>>>
+    //#MARK: - All needed Outlets
     @IBOutlet weak var toolBarBottom: UIToolbar!
     @IBOutlet weak var toolBarTop: UIToolbar!
     
@@ -25,17 +25,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     
-    // <<<<<<<----------------------------------------
-    
+    //#MARK: - Addtional global Variables
     let memeTextFieldDelegate = MemeTextFieldDelegate()
     
-    
+    //#MARK: - ViewController methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Assign the delegate
-        self.textFieldTop.delegate = self.memeTextFieldDelegate
-        self.textFieldBottom.delegate = self.memeTextFieldDelegate
+        textFieldTop.delegate = self.memeTextFieldDelegate
+        textFieldBottom.delegate = self.memeTextFieldDelegate
         
         // Check if a camera is available and update the enabling of the camera button
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
@@ -62,7 +61,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         unsubscribeFromKeyboardNotification()
     }
 
-    // Defined actions -------------------->>>>>>
+    //#MARK: - Defined Actions
     
     @IBAction func pickAnImageFromAlbum(sender: AnyObject) {
         
@@ -95,7 +94,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // We define the completion handler
         activityController.completionWithItemsHandler = {(activityType, completed:Bool, returnedItems:[AnyObject]?, error: NSError?) in
             if completed{
-                let meme = Meme(topText: self.textFieldTop.text!, bottomText: self.textFieldBottom.text!, image:self.imageView.image!, memedImage: memedImage)
+                let meme = Meme(topText: self.textFieldTop.text!, bottomText: self.textFieldBottom.text!, image: self.imageView.image!, memedImage: memedImage)
 
                 /// we dismiss the activity Controller
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -112,11 +111,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         shareButton.enabled = false
     }
     
-    //<<<<<<<<<-------------------------------------------
+
     
     
-    
-    // Delegate Functions ------------------------------->>>>>
+    //#MARK: - Delegate Functions
     
     //For UIImagePickerController
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -131,10 +129,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //<<<<---------------------------------------------------
     
-
-    // Additional methods ------------------------------->>>>>>
+    //#MARK: - Addtional methods
     
     
     /// Initialize the textfields
@@ -161,17 +157,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     /// Generation of a "Memed Image"
     func generateMemeImage() -> UIImage{
         
-        /// We hide first the toolbars
+        // We hide first the toolbars
         toolBarTop.alpha = 0.0
         toolBarBottom.alpha = 0.0
         
-        /// Creating the MemedImage
+        // Creating the MemedImage
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
         let imageMemed: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        /// We show again the toolbars, now that the image is generated
+        // We show again the toolbars, now that the image is generated
         toolBarTop.alpha = 1.0
         toolBarBottom.alpha = 1.0
         
@@ -181,9 +177,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     /// Keyboard Notififcation Subscription
     func subscribeToKeyboardNotification(){
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     /// Keyboard Notification Unsubsciption
@@ -196,7 +191,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func keyboardWillShow(notification: NSNotification){
         
         // We will move the view only if the bottom text is edited
-        if self.textFieldBottom.editing{
+        if textFieldBottom.editing{
         view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
@@ -221,7 +216,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.presentViewController(pickerController, animated: true, completion: nil)
     }
     
-        //<<<<---------------------------------------------------
     
 }
 
