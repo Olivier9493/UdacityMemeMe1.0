@@ -27,6 +27,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     //#MARK: - Addtional global Variables
     let memeTextFieldDelegate = MemeTextFieldDelegate()
+    var textFieldTopOriginY: CGFloat = 0.0
+    var textFieldBottomOriginY: CGFloat = 0.0
+
     
     //#MARK: - ViewController methods
     override func viewDidLoad() {
@@ -42,11 +45,14 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         // at the begin the share button must be set on unabled
         shareButton.enabled = false
         
-        // Initialize the textfields
+        // Get the original position of the text fields
+        textFieldBottomOriginY = textFieldBottom.frame.origin.y
+        textFieldTopOriginY = textFieldTop.frame.origin.y
         
-        textFieldTop = initializeTextFields(textFieldTop, text: "TOP")
-        textFieldBottom = initializeTextFields(textFieldBottom, text: "BOTTOM")
-
+        // Initialize the textfields
+        textFieldTop = initializeTextFields(textFieldTop, text: "TOP", originY: textFieldTopOriginY)
+        textFieldBottom = initializeTextFields(textFieldBottom, text: "BOTTOM", originY: textFieldBottomOriginY)
+        
     }
 
     
@@ -106,8 +112,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     @IBAction func CancelAction(sender: AnyObject) {
         imageView.image = nil
-        textFieldTop = initializeTextFields(textFieldTop, text: "TOP")
-        textFieldBottom = initializeTextFields(textFieldBottom, text: "BOTTOM")
+        textFieldTop = initializeTextFields(textFieldTop, text: "TOP", originY: textFieldTopOriginY)
+        textFieldBottom = initializeTextFields(textFieldBottom, text: "BOTTOM", originY: textFieldBottomOriginY)
         shareButton.enabled = false
     }
     
@@ -120,6 +126,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
             imageView.image = image
+            // Update the position of the text
+            updateTextfieldPosition()
             shareButton.enabled = true
         }
         dismissViewControllerAnimated(true, completion: nil)
@@ -134,7 +142,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     
     /// Initialize the textfields
-    func initializeTextFields( textfield: UITextField, text:String ) -> UITextField{
+    func initializeTextFields( textfield: UITextField, text:String, originY:CGFloat ) -> UITextField{
         let memeTextAttributes = [
             NSStrokeColorAttributeName: UIColor.blackColor(),
             NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -214,6 +222,17 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         pickerController.delegate = self
         pickerController.sourceType = sourceType
         self.presentViewController(pickerController, animated: true, completion: nil)
+    }
+    
+    ///Update the position of the textfields according to the position of the view image
+    func updateTextfieldPosition(){
+        let y1 = view.frame.origin.y
+        let y2 = y1 + view.frame.height
+        let c = (y1 - y2) / 3
+        
+        textFieldTop.frame.origin.y = y1 + c
+        textFieldBottom.frame.origin.y = y2 - c
+        
     }
     
     

@@ -18,6 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U4s-pr-SdL">
+                                <rect key="frame" x="20" y="78" width="560" height="479"/>
+                            </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i67-mO-MyZ" userLabel="ToolbarBottom">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
@@ -36,8 +39,21 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="s0c-VG-nLj"/>
                                 </items>
                             </toolbar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ni-cn-Jqg" userLabel="TextFieldTop">
+                                <rect key="frame" x="20" y="98" width="560" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="h9M-rH-f6k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="OKa-R2-oGn" userLabel="TextFieldBottom">
+                                <rect key="frame" x="20" y="480" width="560" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKq-oE-wpJ" userLabel="ToolbarTop">
-                                <rect key="frame" x="0.0" y="20" width="600" height="64"/>
+                                <rect key="frame" x="0.0" y="34" width="600" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="action" id="FHH-2a-m2b" userLabel="ShareButton">
                                         <connections>
@@ -52,44 +68,25 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ni-cn-Jqg" userLabel="TextFieldTop">
-                                <rect key="frame" x="20" y="89" width="560" height="24"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U4s-pr-SdL">
-                                <rect key="frame" x="63" y="127" width="475" height="346"/>
-                            </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="OKa-R2-oGn" userLabel="TextFieldBottom">
-                                <rect key="frame" x="20" y="491" width="560" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="5qz-9a-fQ7"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4ni-cn-Jqg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2aN-bE-tOb"/>
-                            <constraint firstItem="SKq-oE-wpJ" firstAttribute="trailing" secondItem="i67-mO-MyZ" secondAttribute="trailing" id="4ny-9m-dzG"/>
-                            <constraint firstItem="U4s-pr-SdL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5oL-7h-X5M"/>
-                            <constraint firstItem="4ni-cn-Jqg" firstAttribute="top" secondItem="SKq-oE-wpJ" secondAttribute="bottom" constant="5" id="5sS-9T-P6h"/>
-                            <constraint firstItem="4ni-cn-Jqg" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8qj-JZ-rhU"/>
-                            <constraint firstItem="SKq-oE-wpJ" firstAttribute="leading" secondItem="i67-mO-MyZ" secondAttribute="leading" id="A6B-Et-Krp"/>
-                            <constraint firstItem="i67-mO-MyZ" firstAttribute="top" secondItem="OKa-R2-oGn" secondAttribute="bottom" constant="28" id="AgL-0J-8rd"/>
-                            <constraint firstAttribute="bottom" secondItem="OKa-R2-oGn" secondAttribute="bottom" constant="72" id="EVT-zG-zVf"/>
-                            <constraint firstItem="SKq-oE-wpJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="FRb-eE-Eyk"/>
-                            <constraint firstItem="U4s-pr-SdL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="43" id="Hpc-F6-SHK"/>
-                            <constraint firstItem="OKa-R2-oGn" firstAttribute="top" secondItem="U4s-pr-SdL" secondAttribute="bottom" constant="18" id="OP7-z7-vSt"/>
-                            <constraint firstItem="OKa-R2-oGn" firstAttribute="centerX" secondItem="i67-mO-MyZ" secondAttribute="centerX" id="Rhx-ZJ-3B5"/>
-                            <constraint firstItem="U4s-pr-SdL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SZI-fu-i2u"/>
-                            <constraint firstItem="4ni-cn-Jqg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="dvn-A8-UnG"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="i67-mO-MyZ" secondAttribute="bottom" id="h7M-Dl-9Xa"/>
-                            <constraint firstItem="U4s-pr-SdL" firstAttribute="top" secondItem="4ni-cn-Jqg" secondAttribute="bottom" constant="14" id="hR0-1n-5Eu"/>
-                            <constraint firstItem="SKq-oE-wpJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="pbU-cq-k1Z"/>
-                            <constraint firstItem="OKa-R2-oGn" firstAttribute="trailing" secondItem="4ni-cn-Jqg" secondAttribute="trailing" id="vuA-QA-BNN"/>
-                            <constraint firstItem="OKa-R2-oGn" firstAttribute="leading" secondItem="4ni-cn-Jqg" secondAttribute="leading" id="xYy-Cc-4eh"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="centerX" secondItem="i67-mO-MyZ" secondAttribute="centerX" id="2CK-wK-Frs"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="trailing" secondItem="4ni-cn-Jqg" secondAttribute="trailing" id="8GO-fO-0H2"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="17.5" id="BT8-dD-M2j"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="leading" secondItem="OKa-R2-oGn" secondAttribute="leading" id="Dbp-7Y-QtY"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="trailing" secondItem="OKa-R2-oGn" secondAttribute="trailing" id="E2z-TA-fQf"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="HGT-A4-2fB"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="top" secondItem="SKq-oE-wpJ" secondAttribute="bottom" id="Hy0-Ih-bm4"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="centerX" secondItem="SKq-oE-wpJ" secondAttribute="centerX" id="Pdz-Hp-Z8E"/>
+                            <constraint firstItem="i67-mO-MyZ" firstAttribute="top" secondItem="OKa-R2-oGn" secondAttribute="bottom" constant="52" id="Q5m-J4-JpO"/>
+                            <constraint firstItem="i67-mO-MyZ" firstAttribute="leading" secondItem="SKq-oE-wpJ" secondAttribute="leading" id="Tqx-QF-p68"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="U4s-pr-SdL" secondAttribute="bottom" constant="43" id="U9l-1J-Prv"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="leading" secondItem="4ni-cn-Jqg" secondAttribute="leading" id="Up1-VX-uaj"/>
+                            <constraint firstItem="4ni-cn-Jqg" firstAttribute="top" secondItem="SKq-oE-wpJ" secondAttribute="bottom" constant="20" id="hRS-c5-w0m"/>
+                            <constraint firstItem="i67-mO-MyZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="oeV-NZ-ve8"/>
+                            <constraint firstItem="U4s-pr-SdL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="of7-Ta-Ol5"/>
+                            <constraint firstItem="i67-mO-MyZ" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="p8o-hD-aMr"/>
                         </constraints>
                     </view>
                     <connections>
