@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
    
@@ -29,6 +30,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     let memeTextFieldDelegate = MemeTextFieldDelegate()
     var textFieldTopOriginY: CGFloat = 0.0
     var textFieldBottomOriginY: CGFloat = 0.0
+    var topConstraint: NSLayoutConstraint!
+    var bottomConstraint: NSLayoutConstraint!
 
     
     //#MARK: - ViewController methods
@@ -172,7 +175,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         // Creating the MemedImage
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
-        let imageMemed: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let imageMemed: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         // We show again the toolbars, now that the image is generated
@@ -226,12 +229,43 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     ///Update the position of the textfields according to the position of the view image
     func updateTextfieldPosition(){
-        let y1 = view.frame.origin.y
-        let y2 = y1 + view.frame.height
-        let c = (y1 - y2) / 3
+     
+        // First we remove the existing Constraints
+        if topConstraint != nil{
+            view.removeConstraint(topConstraint)
+        }
         
-        textFieldTop.frame.origin.y = y1 + c
-        textFieldBottom.frame.origin.y = y2 - c
+        if bottomConstraint != nil{
+            view.removeConstraint(bottomConstraint)
+        }
+        
+        // We need to get the position of the image inside of imageView
+        let size = imageView.image != nil ? imageView.image!.size : view.frame.size
+        let frame = AVMakeRectWithAspectRatioInsideRect(size, view.bounds)
+        
+        // We determine the margin for the new constraints : 10 % of the height of the frame
+        let margin = frame.origin.y + frame.size.height * 0.10
+        
+        // we create the new contrainsts
+        topConstraint = NSLayoutConstraint(
+            item: textFieldTop,
+            attribute : .Top,
+            relatedBy: .Equal,
+            toItem: imageView,
+            attribute: .Top,
+            multiplier: 1.0,
+            constant: margin)
+        view.addConstraint(topConstraint)
+        
+        bottomConstraint = NSLayoutConstraint(
+            item: textFieldBottom,
+            attribute : .Bottom,
+            relatedBy: .Equal,
+            toItem: imageView,
+            attribute: .Bottom,
+            multiplier: 1.0,
+            constant: -margin)
+        view.addConstraint(topConstraint)
         
     }
     
