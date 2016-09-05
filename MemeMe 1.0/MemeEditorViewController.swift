@@ -147,9 +147,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     /// Initialize the textfields
     func initializeTextFields( textfield: UITextField, text:String, originY:CGFloat ) -> UITextField{
         let memeTextAttributes = [
-            NSStrokeColorAttributeName: UIColor.blackColor(),
+            NSStrokeColorAttributeName: UIColor.redColor(),
             NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 60)!,
             NSStrokeWidthAttributeName: 3.0]
         
         // Set the text attributes
@@ -230,23 +230,28 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     ///Update the position of the textfields according to the position of the view image
     func updateTextfieldPosition(){
      
+
+ 
         // First we remove the existing Constraints
         if topConstraint != nil{
             view.removeConstraint(topConstraint)
         }
-        
+
         if bottomConstraint != nil{
             view.removeConstraint(bottomConstraint)
         }
+ 
         
         // We need to get the position of the image inside of imageView
-        let size = imageView.image != nil ? imageView.image!.size : view.frame.size
+        let size = imageView.image != nil ? imageView.image!.size : imageView.frame.size
         let frame = AVMakeRectWithAspectRatioInsideRect(size, view.bounds)
         
         // We determine the margin for the new constraints : 10 % of the height of the frame
-        let margin = frame.origin.y + frame.size.height * 0.10
+        let margin = frame.origin.y + frame.size.height * 0.05
         
+
         // we create the new contrainsts
+        
         topConstraint = NSLayoutConstraint(
             item: textFieldTop,
             attribute : .Top,
@@ -256,6 +261,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             multiplier: 1.0,
             constant: margin)
         view.addConstraint(topConstraint)
+ 
         
         bottomConstraint = NSLayoutConstraint(
             item: textFieldBottom,
@@ -265,7 +271,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             attribute: .Bottom,
             multiplier: 1.0,
             constant: -margin)
-        view.addConstraint(topConstraint)
+        view.addConstraint(bottomConstraint)
+
         
     }
     
