@@ -61,6 +61,7 @@
                                     <constraint firstAttribute="height" constant="44" id="vn8-2p-YbS"/>
                                 </constraints>
                                 <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RLo-Fz-pGt"/>
                                     <barButtonItem systemItem="action" id="FHH-2a-m2b" userLabel="ShareButton">
                                         <connections>
                                             <action selector="shareAction:" destination="BYZ-38-t0r" id="6p4-bg-eic"/>
@@ -72,6 +73,7 @@
                                             <action selector="CancelAction:" destination="BYZ-38-t0r" id="OvG-RT-6Ri"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="35D-Bv-sly"/>
                                 </items>
                             </toolbar>
                         </subviews>

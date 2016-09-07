@@ -117,6 +117,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         imageView.image = nil
         textFieldTop = initializeTextFields(textFieldTop, text: "TOP", originY: textFieldTopOriginY)
         textFieldBottom = initializeTextFields(textFieldBottom, text: "BOTTOM", originY: textFieldBottomOriginY)
+        updateTextfieldPosition()
         shareButton.enabled = false
     }
     
@@ -149,7 +150,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         let memeTextAttributes = [
             NSStrokeColorAttributeName: UIColor.redColor(),
             NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 60)!,
+            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 50)!,
             NSStrokeWidthAttributeName: 3.0]
         
         // Set the text attributes
@@ -203,13 +204,24 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         
         // We will move the view only if the bottom text is edited
         if textFieldBottom.editing{
+            
+            // First we remove the existing Constraints
+            if topConstraint != nil{
+                view.removeConstraint(topConstraint)
+            }
+            
+            if bottomConstraint != nil{
+                view.removeConstraint(bottomConstraint)
+            }
         view.frame.origin.y = -getKeyboardHeight(notification)
+        updateTextfieldPosition()
         }
     }
     
     /// Function to move the view back when the keyboard hides
     func keyboardWillHide(notification: NSNotification){
         view.frame.origin.y = 0
+        updateTextfieldPosition()
     }
     
     /// function to get the keyboard height
@@ -246,8 +258,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         let size = imageView.image != nil ? imageView.image!.size : imageView.frame.size
         let frame = AVMakeRectWithAspectRatioInsideRect(size, view.bounds)
         
-        // We determine the margin for the new constraints : 10 % of the height of the frame
-        let margin = frame.origin.y + frame.size.height * 0.05
+        // We determine the margin for the new constraints : 3 % of the height of the frame
+        // let margin = frame.origin.y + frame.size.height * 0.03
+        let margin = frame.size.height * 0.1
         
 
         // we create the new contrainsts
