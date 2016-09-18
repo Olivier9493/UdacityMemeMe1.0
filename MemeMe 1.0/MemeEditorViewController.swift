@@ -206,15 +206,19 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         if textFieldBottom.editing{
             
             // First we remove the existing Constraints
+            
+            textFieldTop.translatesAutoresizingMaskIntoConstraints = false
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            
             if topConstraint != nil{
                 view.removeConstraint(topConstraint)
             }
-            
+
             if bottomConstraint != nil{
                 view.removeConstraint(bottomConstraint)
             }
         view.frame.origin.y = -getKeyboardHeight(notification)
-        updateTextfieldPosition()
+            
         }
     }
     
